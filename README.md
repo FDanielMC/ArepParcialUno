@@ -25,7 +25,14 @@ Se recomienda ejecutar el programa en NetBeans (java Version 17).
 
 
 ## Fachada
-La fachada debe aparecer de la siguiente manera:
+Para poder ingresar se debe poner http://localhost:35000/ o http://localhost:35000/cliente
+
+![image](https://github.com/FDanielMC/ArepParcialUno/assets/123689924/0713ecb8-15e6-45d2-8d67-a71e82deb759)
+
+![image](https://github.com/FDanielMC/ArepParcialUno/assets/123689924/6ece3c14-4c9e-4b74-9f7b-24284d6fb32c)
+
+
+La fachada debe aparecer de la siguiente manera: 
 
 ![image](https://github.com/FDanielMC/ArepParcialUno/assets/123689924/0b3e430f-90fd-4f15-890d-06ad95f191db)
 
