@@ -40,4 +40,5 @@ El único caso de prueba implementado fue el comando Class.
 
 ![image](https://github.com/FDanielMC/ArepParcialUno/assets/123689924/3af48f8a-86af-4d8a-bd6b-0755e4ce1b51)
 
-# Realizado por: Daniel Fernando Moreno Cerón 
+# Realizado por: 
+Daniel Fernando Moreno Cerón 
