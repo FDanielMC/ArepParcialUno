@@ -3,6 +3,7 @@ En este proyecto, por ahora se implementó dos clases. La clase de la fachada es
 
 ## Proceso
 git clone https://github.com/FDanielMC/ArepParcialUno.git
+
 cd ArepParcialUno
 
 ## Ejecucion de la Fachada
