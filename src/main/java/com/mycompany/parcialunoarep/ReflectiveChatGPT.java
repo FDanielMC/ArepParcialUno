@@ -8,10 +8,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.lang.reflect.Member;
+import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 
 /**
  *
@@ -19,7 +24,7 @@ import java.net.URISyntaxException;
  */
 public class ReflectiveChatGPT {
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args) throws IOException, URISyntaxException, ClassNotFoundException {
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(45000);
@@ -43,13 +48,29 @@ public class ReflectiveChatGPT {
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(clientSocket.getInputStream()));
             String inputLine = in.readLine();
-            String outputLine = "";
+            String outputLine = "HTTP/1.1 200 OK\r\n"
+                    + "Content-Type: text/html\r\n"
+                    + "\r\n";
             if (inputLine != null) {
                 System.out.println("Recibí: " + inputLine);
                 URI uri = new URI(inputLine.split(" ")[1]);
                 String path = uri.getPath();
                 String query = uri.getQuery();
+                query = query.replace("comando=", "");
+                if (path.startsWith("/consulta")) {
+                    String command = query.split("\\(")[0];
+                    String[] params = params(query.split("\\(")[1]);
+                    System.out.println(command);
+                    if (command.startsWith("Class")) {
+                        System.out.println("Hola");
+                        String methods = declaredMethod(params);
+                        String fields = declaredFields(params);
+                        outputLine += "<h2>Metodos:</h2>\n" + methods + "<br>\n"
+                                + "<h2>Campos;</h2>\n" + fields;
 
+                    }
+
+                }
                 out.println(outputLine);
             }
             out.println(outputLine);
@@ -58,6 +79,36 @@ public class ReflectiveChatGPT {
             clientSocket.close();
         }
         serverSocket.close();
+    }
+
+    public static String[] params(String paramsString) {
+        String params = paramsString.replace(")", "");
+        String[] arrayStrings = params.split(",");
+        return arrayStrings;
+    }
+
+    public static String declaredMethod(String[] params) throws ClassNotFoundException {
+        String methods = "<h4>";
+        for (int i = 0; i < params.length; i++) {
+            Class c = Class.forName(params[i]);
+            Member[] mbrs = c.getDeclaredMethods();
+            for (Member mbr : mbrs) {
+                methods += ((Method) mbr).toGenericString() + "<br>\n";
+            }
+        }
+        return methods += "</h4>\n";
+    }
+
+    public static String declaredFields(String[] params) throws ClassNotFoundException {
+        String methods = "<h4>";
+        for (int i = 0; i < params.length; i++) {
+            Class c = Class.forName(params[i]);
+            Member[] mbrs = c.getDeclaredFields();
+            for (Member mbr : mbrs) {
+                methods += ((Field) mbr).toGenericString() + "<br>\n";
+            }
+        }
+        return methods += "</h4>\n";
     }
 
 }

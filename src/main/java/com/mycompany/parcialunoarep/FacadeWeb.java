@@ -23,7 +23,7 @@ public class FacadeWeb {
 
     private static final String USER_AGENT = "Mozilla/5.0";
     private static final String GET_URL = "http://localhost:45000/consulta?";
-    
+
     public static void main(String[] args) throws IOException, URISyntaxException {
         ServerSocket serverSocket = null;
         try {
@@ -32,7 +32,6 @@ public class FacadeWeb {
             System.err.println("Could not listen on port: 35000.");
             System.exit(1);
         }
-
         boolean run = true;
         while (run) {
             Socket clientSocket = null;
@@ -43,10 +42,8 @@ public class FacadeWeb {
                 System.err.println("Accept failed.");
                 System.exit(1);
             }
-            PrintWriter out = new PrintWriter(
-                    clientSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             String inputLine = in.readLine();
             String outputLine = "";
             if (inputLine != null) {
@@ -55,11 +52,11 @@ public class FacadeWeb {
                 String path = uri.getPath();
                 String query = uri.getQuery();
                 if (path.startsWith("/consulta")) {
-                    outputLine = "";
-
+                    outputLine = restService(query);
                 } else if (path.startsWith("/cliente") || path.startsWith("/")) {
                     outputLine = clientWeb();
                 }
+
                 out.println(outputLine);
             }
             out.close();
@@ -91,11 +88,12 @@ public class FacadeWeb {
                 + "        <div id=\"getrespmsg\"></div>\n"
                 + "\n"
                 + jsClient()
-                + "    </body>";
+                + "    </body>\n"
+                + "</html>\n";
     }
 
     public static String jsClient() {
-        return " <script>\n"
+        return "<script>\n"
                 + "            function loadGetMsg() {\n"
                 + "                let nameVar = document.getElementById(\"name\").value;\n"
                 + "                const xhttp = new XMLHttpRequest();\n"
@@ -107,6 +105,33 @@ public class FacadeWeb {
                 + "                xhttp.send();\n"
                 + "            }\n"
                 + "        </script>";
+    }
+
+    public static String restService(String query) throws IOException {
+        String outputLine = "";
+        URL obj = new URL(GET_URL + query);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        con.setRequestMethod("GET");
+        con.setRequestProperty("User-Agent", USER_AGENT);
+        int responseCode = con.getResponseCode();
+        System.out.println("GET Response Code :: " + responseCode);
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader inC = new BufferedReader(new InputStreamReader(
+                    con.getInputStream()));
+            String inputLineC;
+            StringBuffer response = new StringBuffer();
+            while ((inputLineC = inC.readLine()) != null) {
+                response.append(inputLineC);
+            }
+            outputLine = "HTTP/1.1 200 OK\r\n"
+                    + "Content-Type: text/html\r\n"
+                    + "\r\n" + response;
+            inC.close();
+        } else {
+            System.out.println("GET request not worked");
+        }
+        System.out.println("GET DONE");
+        return outputLine;
     }
 
 }
