@@ -62,7 +62,6 @@ public class ReflectiveChatGPT {
                     String[] params = params(query.split("\\(")[1]);
                     System.out.println(command);
                     if (command.startsWith("Class")) {
-                        System.out.println("Hola");
                         String methods = declaredMethod(params);
                         String fields = declaredFields(params);
                         outputLine += "<h2>Metodos:</h2>\n" + methods + "<br>\n"
