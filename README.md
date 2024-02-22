@@ -1,22 +1,36 @@
 # AREP Parcial Uno 
 En este proyecto, por ahora se implementó dos clases. La clase de la fachada es FacadeWeb y el backend es ReflectiveChatGPT.
 
+## Proceso
+git clone https://github.com/FDanielMC/ArepParcialUno.git
+cd ArepParcialUno
+
 ## Ejecucion de la Fachada
 Se recomienda ejecutar el programa en NetBeans (java Version 17).
 
-java -cp target/ParcialUnoArep-1.0-SNAPSHOT.jar com.mycompany.parcialunoarep.FacadeWeb
+![image](https://github.com/FDanielMC/ArepParcialUno/assets/123689924/aada80fe-d60e-4313-9f50-3c5b643ce70f)
+
+![image](https://github.com/FDanielMC/ArepParcialUno/assets/123689924/9532b1c3-6802-4cb2-a54d-a3032419e9f1)
+
+
 
 ## Ejecución del Backend
 Se recomienda ejecutar el programa en NetBeans (java Version 17).
 
-java -cp target/ParcialUnoArep-1.0-SNAPSHOT.jar com.mycompany.parcialunoarep.ReflectiveChatGPT
+![image](https://github.com/FDanielMC/ArepParcialUno/assets/123689924/f99136be-5de9-4ad3-92f6-a63845581ef2)
+
+![image](https://github.com/FDanielMC/ArepParcialUno/assets/123689924/3119d659-23b5-49da-b0e2-3c7c8da964ec)
+
+
 
 ## Fachada
-La fachade debe aparecer de la siguiente manera:
+La fachada debe aparecer de la siguiente manera:
 
 ![image](https://github.com/FDanielMC/ArepParcialUno/assets/123689924/0b3e430f-90fd-4f15-890d-06ad95f191db)
 
 ## Casos de Prueba:
+
+El único caso de prueba implementado fue el comando Class.
 
 ### Comando Class:
 
