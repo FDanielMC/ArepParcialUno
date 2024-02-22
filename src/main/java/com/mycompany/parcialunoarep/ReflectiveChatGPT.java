@@ -64,9 +64,13 @@ public class ReflectiveChatGPT {
                     if (command.startsWith("Class")) {
                         String methods = declaredMethod(params);
                         String fields = declaredFields(params);
-                        outputLine += "<h2>Metodos:</h2>\n" + methods + "<br>\n"
+                        outputLine += "<h1>Class</h1>\n" + "<h2>Metodos:</h2>\n" + methods + "<br>\n"
                                 + "<h2>Campos;</h2>\n" + fields;
 
+                    }
+                    else if(command.startsWith("Invoke")){
+                        Class c = Class.forName(command);
+                        
                     }
 
                 }
@@ -109,5 +113,6 @@ public class ReflectiveChatGPT {
         }
         return methods += "</h4>\n";
     }
+    
 
 }
